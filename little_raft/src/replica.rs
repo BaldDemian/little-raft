@@ -850,7 +850,7 @@ where
         if term > self.current_term {
             self.cluster.lock().unwrap().register_leader(None);
             self.become_follower(term);
-        } else if vote_granted {
+        } else if vote_granted && term == self.current_term {
             // Record that the vote has been granted.
             if let Some(cur_votes) = &mut self.current_votes {
                 cur_votes.insert(from_id);
